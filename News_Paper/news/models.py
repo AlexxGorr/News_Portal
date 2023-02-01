@@ -5,6 +5,8 @@ from .resource import TYPE_SELECT
 from datetime import datetime
 from django.conf import settings
 from django.core.cache import cache
+from django.utils.translation import gettext as _
+from django.utils.translation import pgettext_lazy
 
 
 class Authors(models.Model):
@@ -26,7 +28,7 @@ class Authors(models.Model):
 
 
 class Categories(models.Model):
-    cat_name = models.CharField(max_length=255, unique=True)
+    cat_name = models.CharField(max_length=255, unique=True, help_text=_('category name'))
     #subscribers = models.ManyToManyField(settings.AUTH_USER_MODEL, through='SubscribersUsers')
     sub_user = models.ManyToManyField(User, through='SubscribersUsers')
 
@@ -140,8 +142,10 @@ class Appointment(models.Model):
         return f'{self.user_name}: {self.message}'
 
 
-
-
+class MyModel(models.Model):
+    name = models.CharField(max_length=100)
+    kind = models.ForeignKey(Categories, on_delete=models.CASCADE, related_name='kinds',
+                             verbose_name=pgettext_lazy('help text for MyModel model', 'This is the help text'))
 
 
 

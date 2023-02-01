@@ -1,8 +1,11 @@
 {% extends 'flatpages/default.html' %}
+{% load i18n %}
 
 {% block content %}
 
 {% include 'auth.html' %}
+
+
 
 <h2>Страница авторизованного пользователя</h2>
 <br>
@@ -18,6 +21,8 @@
 <hr>
 <button> <a href="sign/upgrade/"> Хочу быть автором!</a> </button>
 {% endif %}
+
+
 
 {% endblock %}
 

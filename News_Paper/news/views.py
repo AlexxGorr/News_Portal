@@ -1,3 +1,4 @@
+import pytz
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView, View
@@ -10,11 +11,15 @@ from datetime import datetime, timedelta
 from django.core.mail import send_mail
 from django.core.cache import cache
 
-from .models import Posts, Authors, Categories, Appointment
+from .models import Posts, Authors, Categories, Appointment, MyModel
 from .filters import PostFilter
 from .forms import PostForm
 
 from .tasks import hello, printer
+
+from django.utils.translation import gettext as _
+from django.utils.translation import activate, get_supported_language_variant
+from django.utils import timezone
 
 
 class IndexView(View):
@@ -179,6 +184,26 @@ class AppointmentView(View):
 #         context['is_not_subscribers'] = self.queryset.user not in self.category.subscribers.all()
 #         context['category'] = self.category
 #         return context
+
+class Index(View):
+    def get(self, request):
+        current_time = timezone.now()
+
+        # Translators: This message appears on the home page only.
+        models = MyModel.objects.all()
+
+        context = {
+            'models': models,
+            'current_time': timezone.now(),
+            'timezones': pytz.common_timezones  # добавляем в контекст все доступные часовые пояса
+        }
+        return HttpResponse(render(request, 'posts.html', context))
+
+    # по пост-запросу будем добавлять в сессию часовой пояс, который и будет обрабатываться
+    # нвписанным ранее middleware
+    def post(self, request):
+        request.session['django_timezone'] = request.POST['timezone']
+        return redirect('/')
 
 
 
