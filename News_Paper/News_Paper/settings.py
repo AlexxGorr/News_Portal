@@ -87,7 +87,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
-    'News_Paper.middlewares.TimezoneMiddleware'
+    'middlewares.TimezoneMiddleware',
 ]
 
 ROOT_URLCONF = 'News_Paper.urls'
@@ -130,7 +130,7 @@ CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
         'LOCATION': os.path.join(BASE_DIR, 'cache_files'),
-        'TIMEOUT': 30,
+        # 'TIMEOUT': 30,
     }
 }
 

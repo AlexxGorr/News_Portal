@@ -3,6 +3,7 @@
 {% load custom_tags %}
 {% load i18n %}
 
+
 {% block title %}
 Posts
 {% endblock title %}
@@ -11,7 +12,8 @@ Posts
 
 {% include 'auth.html' %}
 
- <form action="{% url 'set_language' %}" method="POST"> {% csrf_token %} <!-- Не забываем по csrf_token для POST запросов -->
+<!-- Переключатель языка -->
+<form action="{% url 'set_language' %}" method="POST"> {% csrf_token %} <!-- Не забываем по csrf_token для POST запросов -->
         <input type="hidden" name="next" value="{{ redirect_to }}">
 
         <select name="language" id="">
@@ -26,6 +28,9 @@ Posts
         </select>
         <input type="submit" value="set">
     </form>
+
+
+
 
 
     <h1>Список публикаций</h1>

@@ -6,7 +6,7 @@ class TimezoneMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
 
-    def _call_(self, request):
+    def __call__(self, request):
         tzname = request.session.get('django_timezone')  # пытаемся забрать часовой пояс из сессии
         # если он есть в сессии, то выставляем такой часовой пляс. Если его нет, значит он не установлен,
         # и часовой пояс надо выставить по умолчанию (на время сервера)
