@@ -5,14 +5,14 @@ from django.views.decorators.cache import cache_page
 from sign.views import upgrade_me
 from .views import (
     PostsList, PostDetail, PostCreate, PostUpdate,
-    PostDelete, PostSearch, AppointmentView, subscribe, IndexView
+    PostDelete, PostSearch, AppointmentView, subscribe, IndexView, Index
 )
 
 urlpatterns = [
-    path('', cache_page(60*5)(PostsList.as_view()), name='list'),
-    path('<int:pk>', cache_page(60)(PostDetail.as_view()), name='detail'),
-    # path('', PostsList.as_view(), name='list'),
-    # path('<int:pk>', PostDetail.as_view(), name='detail'),
+    # path('', cache_page(60*5)(PostsList.as_view()), name='list'),
+    # path('<int:pk>', cache_page(60)(PostDetail.as_view()), name='detail'),
+    path('', PostsList.as_view(), name='list'),
+    path('<int:pk>', PostDetail.as_view(), name='detail'),
 
     path('create/', PostCreate.as_view(), name='create'),
     path('<int:pk>/edit/', PostUpdate.as_view(), name='edit'),
@@ -31,7 +31,8 @@ urlpatterns = [
     path('sign/upgrade/', upgrade_me, name='upgrade_me'),
     #path('categories/<int:pk>', CategoryListView.as_view(), name='category_list'),
 
-    path('', IndexView.as_view())
+    path('', IndexView.as_view()),
+    path('index/', Index.as_view(), name='index'),
 ]
 
 

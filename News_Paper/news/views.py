@@ -197,7 +197,7 @@ class Index(View):
             'current_time': timezone.now(),
             'timezones': pytz.common_timezones  # добавляем в контекст все доступные часовые пояса
         }
-        return HttpResponse(render(request, 'flatpages/default.html', context))
+        return HttpResponse(render(request, 'index.html', context))
 
     # по пост-запросу будем добавлять в сессию часовой пояс, который и будет обрабатываться
     # нвписанным ранее middleware
